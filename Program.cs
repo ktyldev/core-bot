@@ -1,12 +1,32 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Discord;
+using Discord.WebSocket;
 
-namespace test
+class Program
 {
-    class Program
+    private DiscordSocketClient _client;
+
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        new Program().StartAsync().GetAwaiter().GetResult();
+    }
+
+    public async Task StartAsync()
+    {
+        _client = new DiscordSocketClient();
+
+        _client.Log += m =>
         {
-            Console.WriteLine("Hello World!");
-        }
+            Console.WriteLine(m);
+            return Task.CompletedTask;
+        };
+
+        string token = "TOKEN";
+
+        await _client.LoginAsync(TokenType.Bot, token);
+        await _client.StartAsync();
+
+        await Task.Delay(-1);
     }
 }
