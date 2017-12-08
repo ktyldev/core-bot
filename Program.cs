@@ -9,10 +9,10 @@ class Program
 
     static void Main(string[] args)
     {
-        new Program().StartAsync().GetAwaiter().GetResult();
+        new Program().StartAsync(args[0]).GetAwaiter().GetResult();
     }
 
-    public async Task StartAsync()
+    public async Task StartAsync(string token)
     {
         _client = new DiscordSocketClient();
 
@@ -21,8 +21,6 @@ class Program
             Console.WriteLine(m);
             return Task.CompletedTask;
         };
-
-        string token = "TOKEN";
 
         await _client.LoginAsync(TokenType.Bot, token);
         await _client.StartAsync();
